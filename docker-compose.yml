@@ -3,6 +3,9 @@ services:
     build:
       context: ./backend
     container_name: laravel_app
+    volumes:
+      - ./backend:/var/www
+      - /var/www/vendor
     ports:
       - "8000:8000"
     depends_on:
