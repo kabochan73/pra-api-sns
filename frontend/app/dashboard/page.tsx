@@ -3,23 +3,23 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { api, removeToken } from '../lib/api';
+import { usePosts } from '../hooks/usePosts';
 import PostForm from '../components/PostForm';
 import PostList from '../components/PostList';
 
 type User = { id: number; name: string; email: string };
-type Post = { id: number; content: string; created_at: string; user: { id: number; name: string } };
 
 export default function DashboardPage() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
-  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const { posts, setPosts, addPost, deletePost, updatePost } = usePosts();
 
   useEffect(() => {
     Promise.all([api.me(), api.getPosts()])
-      .then(([me, posts]) => {
+      .then(([me, fetchedPosts]) => {
         setUser(me);
-        setPosts(posts);
+        setPosts(fetchedPosts);
       })
       .catch(() => router.push('/login'))
       .finally(() => setLoading(false));
@@ -32,10 +32,6 @@ export default function DashboardPage() {
       removeToken();
       router.push('/login');
     }
-  };
-
-  const handleNewPost = (post: Post) => {
-    setPosts((prev) => [post, ...prev]);
   };
 
   if (loading) {
@@ -59,8 +55,13 @@ export default function DashboardPage() {
           </button>
         </div>
 
-        <PostForm onPost={handleNewPost} />
-        <PostList posts={posts} />
+        <PostForm onPost={addPost} />
+        <PostList
+          posts={posts}
+          currentUserId={user?.id ?? 0}
+          onDelete={deletePost}
+          onUpdate={updatePost}
+        />
       </div>
     </div>
   );

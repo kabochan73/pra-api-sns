@@ -68,4 +68,13 @@ export const api = {
       method: 'POST',
       body: JSON.stringify(body),
     }),
+
+  updatePost: (id: number, body: { content: string }) =>
+    request<{ id: number; content: string; created_at: string; user: { id: number; name: string } }>(`/posts/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(body),
+    }),
+
+  deletePost: (id: number) =>
+    request<{ message: string }>(`/posts/${id}`, { method: 'DELETE' }),
 };

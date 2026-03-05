@@ -72,4 +72,30 @@ Route::middleware('auth:sanctum')->group(function () {
 
         return response()->json($post->load('user'), 201);
     });
+
+    // 投稿編集
+    Route::put('/posts/{post}', function (Request $request, Post $post) {
+        if ($request->user()->id !== $post->user_id) {
+            return response()->json(['message' => '権限がありません。'], 403);
+        }
+
+        $request->validate([
+            'content' => 'required|string|max:280',
+        ]);
+
+        $post->update(['content' => $request->content]);
+
+        return response()->json($post->load('user'));
+    });
+
+    // 投稿削除
+    Route::delete('/posts/{post}', function (Request $request, Post $post) {
+        if ($request->user()->id !== $post->user_id) {
+            return response()->json(['message' => '権限がありません。'], 403);
+        }
+
+        $post->delete();
+
+        return response()->json(['message' => '削除しました。']);
+    });
 });
