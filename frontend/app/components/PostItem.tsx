@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import Link from 'next/link';
+import styles from './PostItem.module.css';
 
 type Post = { id: number; content: string; created_at: string; likes_count: number; liked_by_me: number; user: { id: number; name: string } };
 
@@ -13,7 +14,7 @@ type Props = {
   onLike: (id: number) => void;
 };
 
-export default function PostItem({ post, currentUserId, onDelete, onUpdate, onLike }: Props) {
+const PostItem = memo(function PostItem({ post, currentUserId, onDelete, onUpdate, onLike }: Props) {
   const [editing, setEditing] = useState(false);
   const [editContent, setEditContent] = useState(post.content);
 
@@ -31,7 +32,7 @@ export default function PostItem({ post, currentUserId, onDelete, onUpdate, onLi
   const isOwner = post.user.id === currentUserId;
 
   return (
-    <div className="rounded-xl bg-white p-4 shadow">
+    <div className={styles.card}>
       <div className="flex items-center justify-between">
         <Link href={`/profile/${post.user.id}`} className="text-sm font-medium text-zinc-900 hover:underline">
           {post.user.name}
@@ -61,7 +62,7 @@ export default function PostItem({ post, currentUserId, onDelete, onUpdate, onLi
             onChange={(e) => setEditContent(e.target.value)}
             maxLength={280}
             rows={3}
-            className="w-full resize-none rounded-lg border border-zinc-200 p-2 text-sm outline-none focus:border-zinc-400"
+            className={styles.textarea}
           />
           <div className="mt-2 flex justify-end gap-2">
             <button
@@ -72,7 +73,7 @@ export default function PostItem({ post, currentUserId, onDelete, onUpdate, onLi
             </button>
             <button
               onClick={handleUpdate}
-              className="rounded-lg bg-zinc-900 px-3 py-1 text-xs font-medium text-white hover:bg-zinc-700"
+              className={styles.saveButton}
             >
               保存
             </button>
@@ -85,7 +86,7 @@ export default function PostItem({ post, currentUserId, onDelete, onUpdate, onLi
       <div className="mt-3 flex items-center gap-1">
         <button
           onClick={() => onLike(post.id)}
-          className={`text-sm transition ${post.liked_by_me ? 'text-red-500' : 'text-zinc-400 hover:text-red-400'}`}
+          className={`${styles.likeButton} ${post.liked_by_me ? styles.liked : styles.notLiked}`}
         >
           {post.liked_by_me ? '♥' : '♡'}
         </button>
@@ -96,4 +97,6 @@ export default function PostItem({ post, currentUserId, onDelete, onUpdate, onLi
       </div>
     </div>
   );
-}
+});
+
+export default PostItem;

@@ -1,0 +1,50 @@
+.card {
+  border-radius: 0.75rem;
+  background-color: #fff;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.textarea {
+  width: 100%;
+  resize: none;
+  border-radius: 0.5rem;
+  border: 1px solid #e4e4e7;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.textarea:focus {
+  border-color: #a1a1aa;
+}
+
+.saveButton {
+  border-radius: 0.5rem;
+  background-color: #18181b;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.saveButton:hover {
+  background-color: #3f3f46;
+}
+
+.likeButton {
+  font-size: 0.875rem;
+  transition: color 0.15s;
+}
+
+.liked {
+  color: #ef4444;
+}
+
+.notLiked {
+  color: #a1a1aa;
+}
+
+.notLiked:hover {
+  color: #f87171;
+}
