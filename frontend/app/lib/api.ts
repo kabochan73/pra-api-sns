@@ -59,4 +59,13 @@ export const api = {
 
   me: () =>
     request<{ id: number; name: string; email: string }>('/me'),
+
+  getPosts: () =>
+    request<{ id: number; content: string; created_at: string; user: { id: number; name: string } }[]>('/posts'),
+
+  createPost: (body: { content: string }) =>
+    request<{ id: number; content: string; created_at: string; user: { id: number; name: string } }>('/posts', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
 };

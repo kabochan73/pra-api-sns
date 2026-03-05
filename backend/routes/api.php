@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -51,5 +52,24 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/me', function (Request $request) {
         return response()->json($request->user());
+    });
+
+    // 投稿一覧
+    Route::get('/posts', function (Request $request) {
+        $posts = Post::with('user')->latest()->get();
+        return response()->json($posts);
+    });
+
+    // 投稿作成
+    Route::post('/posts', function (Request $request) {
+        $request->validate([
+            'content' => 'required|string|max:280',
+        ]);
+
+        $post = $request->user()->posts()->create([
+            'content' => $request->content,
+        ]);
+
+        return response()->json($post->load('user'), 201);
     });
 });
