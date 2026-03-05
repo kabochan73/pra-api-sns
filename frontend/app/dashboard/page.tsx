@@ -7,6 +7,7 @@ import { usePosts } from '../hooks/usePosts';
 import PostForm from '../components/PostForm';
 import PostList from '../components/PostList';
 import PostSkeleton from '../components/PostSkeleton';
+import Header from '../components/Header';
 
 type User = { id: number; name: string; email: string };
 
@@ -53,18 +54,9 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50 py-8">
-      <div className="mx-auto max-w-xl px-4">
-        <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-zinc-900">{user?.name} さん</h1>
-          <button
-            onClick={handleLogout}
-            className="rounded-lg border border-zinc-300 px-4 py-1.5 text-sm text-zinc-600 hover:bg-zinc-100"
-          >
-            ログアウト
-          </button>
-        </div>
-
+    <div className="min-h-screen bg-zinc-50">
+      <Header username={user?.name ?? ''} userId={user?.id ?? 0} onLogout={handleLogout} />
+      <div className="mx-auto max-w-xl px-4 py-8">
         <PostForm onPost={addPost} />
         <PostList
           posts={posts}

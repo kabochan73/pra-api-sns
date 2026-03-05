@@ -1,0 +1,49 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #fff;
+  border-bottom: 1px solid #e4e4e7;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
+}
+
+.logo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.username {
+  font-size: 0.875rem;
+  color: #52525b;
+}
+
+.logoutButton {
+  border: 1px solid #d4d4d8;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.875rem;
+  font-size: 0.875rem;
+  color: #52525b;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.logoutButton:hover {
+  background-color: #f4f4f5;
+}
