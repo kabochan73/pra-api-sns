@@ -132,4 +132,23 @@ Route::middleware('auth:sanctum')->group(function () {
 
         return response()->json(['message' => '削除しました。']);
     });
+
+    // ユーザープロフィール
+    Route::get('/users/{id}', function (Request $request, int $id) {
+        $authUserId = $request->user()->id;
+        $user = User::findOrFail($id);
+        $posts = Post::with('user')->withCount('likes')
+            ->addSelect(['liked_by_me' => Like::selectRaw('COUNT(*)')
+                ->whereColumn('post_id', 'posts.id')
+                ->where('user_id', $authUserId)
+            ])
+            ->where('user_id', $id)
+            ->latest()
+            ->get();
+
+        return response()->json([
+            'user' => ['id' => $user->id, 'name' => $user->name],
+            'posts' => $posts,
+        ]);
+    });
 });

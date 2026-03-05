@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-type Post = { id: number; content: string; created_at: string; user: { id: number; name: string } };
+type Post = { id: number; content: string; created_at: string; likes_count: number; liked_by_me: number; user: { id: number; name: string } };
 
 type Props = {
   onPost: (post: Post) => void;

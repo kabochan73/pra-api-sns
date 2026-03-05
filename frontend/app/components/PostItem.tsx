@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 type Post = { id: number; content: string; created_at: string; likes_count: number; liked_by_me: number; user: { id: number; name: string } };
 
@@ -32,7 +33,9 @@ export default function PostItem({ post, currentUserId, onDelete, onUpdate, onLi
   return (
     <div className="rounded-xl bg-white p-4 shadow">
       <div className="flex items-center justify-between">
-        <p className="text-sm font-medium text-zinc-900">{post.user.name}</p>
+        <Link href={`/profile/${post.user.id}`} className="text-sm font-medium text-zinc-900 hover:underline">
+          {post.user.name}
+        </Link>
         {isOwner && !editing && (
           <div className="flex gap-2">
             <button

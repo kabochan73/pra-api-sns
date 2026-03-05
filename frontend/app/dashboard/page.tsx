@@ -6,6 +6,7 @@ import { api, removeToken } from '../lib/api';
 import { usePosts } from '../hooks/usePosts';
 import PostForm from '../components/PostForm';
 import PostList from '../components/PostList';
+import PostSkeleton from '../components/PostSkeleton';
 
 type User = { id: number; name: string; email: string };
 
@@ -23,7 +24,7 @@ export default function DashboardPage() {
       })
       .catch(() => router.push('/login'))
       .finally(() => setLoading(false));
-  }, [router]);
+  }, [router, setPosts]);
 
   const handleLogout = async () => {
     try {
@@ -36,8 +37,17 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-zinc-50">
-        <p className="text-zinc-500">読み込み中...</p>
+      <div className="min-h-screen bg-zinc-50 py-8">
+        <div className="mx-auto max-w-xl px-4">
+          <div className="mb-6 flex items-center justify-between animate-pulse">
+            <div className="h-6 w-32 rounded bg-zinc-200" />
+            <div className="h-8 w-20 rounded-lg bg-zinc-200" />
+          </div>
+          <div className="mb-4 h-24 rounded-xl bg-white shadow animate-pulse" />
+          <div className="flex flex-col gap-3">
+            {[...Array(4)].map((_, i) => <PostSkeleton key={i} />)}
+          </div>
+        </div>
       </div>
     );
   }
