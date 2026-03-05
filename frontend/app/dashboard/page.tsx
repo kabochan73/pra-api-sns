@@ -13,7 +13,7 @@ export default function DashboardPage() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const { posts, setPosts, addPost, deletePost, updatePost } = usePosts();
+  const { posts, setPosts, addPost, deletePost, updatePost, toggleLike } = usePosts();
 
   useEffect(() => {
     Promise.all([api.me(), api.getPosts()])
@@ -61,6 +61,7 @@ export default function DashboardPage() {
           currentUserId={user?.id ?? 0}
           onDelete={deletePost}
           onUpdate={updatePost}
+          onLike={toggleLike}
         />
       </div>
     </div>

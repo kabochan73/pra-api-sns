@@ -2,16 +2,17 @@
 
 import { useState } from 'react';
 
-type Post = { id: number; content: string; created_at: string; user: { id: number; name: string } };
+type Post = { id: number; content: string; created_at: string; likes_count: number; liked_by_me: number; user: { id: number; name: string } };
 
 type Props = {
   post: Post;
   currentUserId: number;
   onDelete: (id: number) => void;
   onUpdate: (id: number, content: string) => void;
+  onLike: (id: number) => void;
 };
 
-export default function PostItem({ post, currentUserId, onDelete, onUpdate }: Props) {
+export default function PostItem({ post, currentUserId, onDelete, onUpdate, onLike }: Props) {
   const [editing, setEditing] = useState(false);
   const [editContent, setEditContent] = useState(post.content);
 
@@ -78,9 +79,18 @@ export default function PostItem({ post, currentUserId, onDelete, onUpdate }: Pr
         <p className="mt-1 text-sm text-zinc-700">{post.content}</p>
       )}
 
-      <p className="mt-2 text-xs text-zinc-400">
-        {new Date(post.created_at).toLocaleString('ja-JP')}
-      </p>
+      <div className="mt-3 flex items-center gap-1">
+        <button
+          onClick={() => onLike(post.id)}
+          className={`text-sm transition ${post.liked_by_me ? 'text-red-500' : 'text-zinc-400 hover:text-red-400'}`}
+        >
+          {post.liked_by_me ? '♥' : '♡'}
+        </button>
+        <span className="text-xs text-zinc-400">{post.likes_count}</span>
+        <p className="ml-auto text-xs text-zinc-400">
+          {new Date(post.created_at).toLocaleString('ja-JP')}
+        </p>
+      </div>
     </div>
   );
 }

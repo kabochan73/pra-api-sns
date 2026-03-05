@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { api } from '../lib/api';
 
-type Post = { id: number; content: string; created_at: string; user: { id: number; name: string } };
+type Post = { id: number; content: string; created_at: string; likes_count: number; liked_by_me: number; user: { id: number; name: string } };
 
 export function usePosts(initialPosts: Post[] = []) {
   const [posts, setPosts] = useState<Post[]>(initialPosts);
@@ -21,5 +21,12 @@ export function usePosts(initialPosts: Post[] = []) {
     setPosts((prev) => prev.map((p) => (p.id === updated.id ? updated : p)));
   };
 
-  return { posts, setPosts, addPost, deletePost, updatePost };
+  const toggleLike = async (id: number) => {
+    const { likes_count, liked_by_me } = await api.toggleLike(id);
+    setPosts((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, likes_count, liked_by_me: liked_by_me ? 1 : 0 } : p))
+    );
+  };
+
+  return { posts, setPosts, addPost, deletePost, updatePost, toggleLike };
 }

@@ -1,15 +1,16 @@
 import PostItem from './PostItem';
 
-type Post = { id: number; content: string; created_at: string; user: { id: number; name: string } };
+type Post = { id: number; content: string; created_at: string; likes_count: number; liked_by_me: number; user: { id: number; name: string } };
 
 type Props = {
   posts: Post[];
   currentUserId: number;
   onDelete: (id: number) => void;
   onUpdate: (id: number, content: string) => void;
+  onLike: (id: number) => void;
 };
 
-export default function PostList({ posts, currentUserId, onDelete, onUpdate }: Props) {
+export default function PostList({ posts, currentUserId, onDelete, onUpdate, onLike }: Props) {
   if (posts.length === 0) {
     return <p className="text-center text-sm text-zinc-400">まだ投稿がありません</p>;
   }
@@ -23,6 +24,7 @@ export default function PostList({ posts, currentUserId, onDelete, onUpdate }: P
           currentUserId={currentUserId}
           onDelete={onDelete}
           onUpdate={onUpdate}
+          onLike={onLike}
         />
       ))}
     </div>

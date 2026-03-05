@@ -61,20 +61,23 @@ export const api = {
     request<{ id: number; name: string; email: string }>('/me'),
 
   getPosts: () =>
-    request<{ id: number; content: string; created_at: string; user: { id: number; name: string } }[]>('/posts'),
+    request<{ id: number; content: string; created_at: string; likes_count: number; liked_by_me: number; user: { id: number; name: string } }[]>('/posts'),
 
   createPost: (body: { content: string }) =>
-    request<{ id: number; content: string; created_at: string; user: { id: number; name: string } }>('/posts', {
+    request<{ id: number; content: string; created_at: string; likes_count: number; liked_by_me: number; user: { id: number; name: string } }>('/posts', {
       method: 'POST',
       body: JSON.stringify(body),
     }),
 
   updatePost: (id: number, body: { content: string }) =>
-    request<{ id: number; content: string; created_at: string; user: { id: number; name: string } }>(`/posts/${id}`, {
+    request<{ id: number; content: string; created_at: string; likes_count: number; liked_by_me: number; user: { id: number; name: string } }>(`/posts/${id}`, {
       method: 'PUT',
       body: JSON.stringify(body),
     }),
 
   deletePost: (id: number) =>
     request<{ message: string }>(`/posts/${id}`, { method: 'DELETE' }),
+
+  toggleLike: (postId: number) =>
+    request<{ likes_count: number; liked_by_me: boolean }>(`/posts/${postId}/like`, { method: 'POST' }),
 };
