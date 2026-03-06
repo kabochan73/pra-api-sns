@@ -51,8 +51,14 @@ export default function SearchPage() {
 
   return (
     <div className="min-h-screen bg-zinc-50">
-      <Header username={user?.name ?? ''} userId={user?.id ?? 0} onLogout={handleLogout} />
+      <Header username={user?.name ?? ''} userId={user?.id ?? 0} onLogout={handleLogout} defaultQuery={q} />
       <div className="mx-auto max-w-xl px-4 py-8">
+        <button
+            onClick={() => router.back()}
+            className="text-sm text-zinc-400 hover:text-zinc-700 mb-4"
+          >
+            ← 戻る
+          </button>
         <h2 className="mb-4 text-sm font-semibold text-zinc-500">
           「{q}」の検索結果
         </h2>
