@@ -81,6 +81,12 @@ export const api = {
   toggleLike: (postId: number) =>
     request<{ likes_count: number; liked_by_me: boolean }>(`/posts/${postId}/like`, { method: 'POST' }),
 
+  search: (q: string) =>
+    request<{
+      posts: { id: number; content: string; created_at: string; likes_count: number; liked_by_me: number; user: { id: number; name: string } }[];
+      users: { id: number; name: string }[];
+    }>(`/search?q=${encodeURIComponent(q)}`),
+
   getProfile: (userId: number) =>
     request<{
       user: { id: number; name: string };

@@ -47,3 +47,41 @@
 .logoutButton:hover {
   background-color: #f4f4f5;
 }
+
+.searchForm {
+  flex: 1;
+  max-width: 16rem;
+  margin: 0 0.75rem;
+}
+
+.searchWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 0.5rem;
+  width: 1rem;
+  height: 1rem;
+  color: #a1a1aa;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  border: 1px solid #d4d4d8;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.75rem 0.25rem 2rem;
+  font-size: 0.875rem;
+  color: #27272a;
+  background-color: #f4f4f5;
+  outline: none;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.searchInput:focus {
+  border-color: #a1a1aa;
+  background-color: #fff;
+}
