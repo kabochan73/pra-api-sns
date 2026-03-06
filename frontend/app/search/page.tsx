@@ -7,6 +7,7 @@ import { api, removeToken } from '../lib/api';
 import { usePosts } from '../hooks/usePosts';
 import Header from '../components/Header';
 import PostList from '../components/PostList';
+import Footer from '../components/Footer';
 
 type User = { id: number; name: string; email: string };
 type SearchUser = { id: number; name: string };
@@ -50,9 +51,9 @@ export default function SearchPage() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <div className="flex min-h-screen flex-col bg-zinc-50">
       <Header username={user?.name ?? ''} userId={user?.id ?? 0} onLogout={handleLogout} defaultQuery={q} />
-      <div className="mx-auto max-w-xl px-4 py-8">
+      <div className="mx-auto w-full max-w-xl flex-1 px-4 py-8">
         <button
             onClick={() => router.back()}
             className="text-sm text-zinc-400 hover:text-zinc-700 mb-4"
@@ -101,6 +102,7 @@ export default function SearchPage() {
           </>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

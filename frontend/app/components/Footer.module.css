@@ -1,0 +1,35 @@
+.footer {
+  border-top: 1px solid #e4e4e7;
+  background-color: rgb(38, 37, 37);
+  margin-top: auto;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.copy {
+  font-size: 0.75rem;
+  color: white;
+}
+
+.links {
+  display: flex;
+  gap: 1rem;
+}
+
+.link {
+  font-size: 0.75rem;
+  color: white;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.link:hover {
+  color: #52525b;
+}

@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { api } from '../../lib/api';
 import { usePosts } from '../../hooks/usePosts';
+import PostForm from '../../components/PostForm';
 import PostList from '../../components/PostList';
 import PostSkeleton from '../../components/PostSkeleton';
+import Footer from '../../components/Footer';
 
 type User = { id: number; name: string };
 
@@ -16,7 +18,7 @@ export default function ProfilePage() {
   const [profileUser, setProfileUser] = useState<User | null>(null);
   const [currentUserId, setCurrentUserId] = useState<number>(0);
   const [loading, setLoading] = useState(true);
-  const { posts, setPosts, deletePost, updatePost, toggleLike } = usePosts();
+  const { posts, setPosts, addPost, deletePost, updatePost, toggleLike } = usePosts();
 
   useEffect(() => {
     Promise.all([api.me(), api.getProfile(userId)])
@@ -55,8 +57,8 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50 py-8">
-      <div className="mx-auto max-w-xl px-4">
+    <div className="flex min-h-screen flex-col bg-zinc-50">
+      <div className="mx-auto w-full max-w-xl flex-1 px-4 py-8">
         <div className="mb-6 flex items-center gap-3">
           <button
             onClick={() => router.back()}
@@ -79,6 +81,9 @@ export default function ProfilePage() {
           </div>
         </div>
 
+        {currentUserId === userId && (
+          <PostForm onPost={addPost} />
+        )}
         <PostList
           posts={posts}
           currentUserId={currentUserId}
@@ -87,6 +92,7 @@ export default function ProfilePage() {
           onLike={toggleLike}
         />
       </div>
+      <Footer />
     </div>
   );
 }
