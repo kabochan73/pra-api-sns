@@ -5,9 +5,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { api, removeToken } from '../lib/api';
 import { usePosts } from '../hooks/usePosts';
-import Header from '../components/Header';
-import PostList from '../components/PostList';
-import Footer from '../components/Footer';
+import Header from '../components/layout/Header';
+import PostList from '../components/post/PostList';
+import Footer from '../components/layout/Footer';
 
 type User = { id: number; name: string; email: string };
 type SearchUser = { id: number; name: string };

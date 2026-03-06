@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { api } from '../../lib/api';
 import { usePosts } from '../../hooks/usePosts';
-import PostForm from '../../components/PostForm';
-import PostList from '../../components/PostList';
-import PostSkeleton from '../../components/PostSkeleton';
-import Footer from '../../components/Footer';
+import PostForm from '../../components/post/PostForm';
+import PostList from '../../components/post/PostList';
+import PostSkeleton from '../../components/post/PostSkeleton';
+import Footer from '../../components/layout/Footer';
 
 type User = { id: number; name: string };
 

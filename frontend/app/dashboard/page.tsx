@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { api, removeToken } from '../lib/api';
 import { usePosts } from '../hooks/usePosts';
-import PostList from '../components/PostList';
-import PostSkeleton from '../components/PostSkeleton';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import PostList from '../components/post/PostList';
+import PostSkeleton from '../components/post/PostSkeleton';
+import Header from '../components/layout/Header';
+import Footer from '../components/layout/Footer';
 
 type User = { id: number; name: string; email: string };
 
