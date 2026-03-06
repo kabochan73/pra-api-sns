@@ -60,8 +60,12 @@ export const api = {
   me: () =>
     request<{ id: number; name: string; email: string }>('/me'),
 
-  getPosts: () =>
-    request<{ id: number; content: string; created_at: string; likes_count: number; liked_by_me: number; user: { id: number; name: string } }[]>('/posts'),
+  getPosts: (page = 1) =>
+    request<{
+      data: { id: number; content: string; created_at: string; likes_count: number; liked_by_me: number; user: { id: number; name: string } }[];
+      current_page: number;
+      last_page: number;
+    }>(`/posts?page=${page}`),
 
   createPost: (body: { content: string }) =>
     request<{ id: number; content: string; created_at: string; likes_count: number; liked_by_me: number; user: { id: number; name: string } }>('/posts', {

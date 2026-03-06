@@ -64,7 +64,7 @@ Route::middleware('auth:sanctum')->group(function () {
                 ->where('user_id', $userId)
             ])
             ->latest()
-            ->get();
+            ->paginate(10);
         return response()->json($posts);
     });
 

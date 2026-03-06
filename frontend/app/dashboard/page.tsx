@@ -15,17 +15,21 @@ export default function DashboardPage() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
   const { posts, setPosts, deletePost, updatePost, toggleLike } = usePosts();
 
   useEffect(() => {
-    Promise.all([api.me(), api.getPosts()])
-      .then(([me, fetchedPosts]) => {
+    setLoading(true);
+    Promise.all([api.me(), api.getPosts(page)])
+      .then(([me, result]) => {
         setUser(me);
-        setPosts(fetchedPosts);
+        setPosts(result.data);
+        setLastPage(result.last_page);
       })
       .catch(() => router.push('/login'))
       .finally(() => setLoading(false));
-  }, [router, setPosts]);
+  }, [page, router, setPosts]);
 
   const handleLogout = async () => {
     try {
@@ -64,6 +68,25 @@ export default function DashboardPage() {
           onUpdate={updatePost}
           onLike={toggleLike}
         />
+        {lastPage > 1 && (
+          <div className="mt-6 flex items-center justify-center gap-2">
+            <button
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={page === 1}
+              className="rounded-lg border border-zinc-200 px-4 py-1.5 text-sm text-zinc-600 hover:bg-zinc-100 disabled:opacity-30 disabled:cursor-not-allowed"
+            >
+              前へ
+            </button>
+            <span className="text-sm text-zinc-400">{page} / {lastPage}</span>
+            <button
+              onClick={() => setPage((p) => Math.min(lastPage, p + 1))}
+              disabled={page === lastPage}
+              className="rounded-lg border border-zinc-200 px-4 py-1.5 text-sm text-zinc-600 hover:bg-zinc-100 disabled:opacity-30 disabled:cursor-not-allowed"
+            >
+              次へ
+            </button>
+          </div>
+        )}
       </div>
       <Footer />
     </div>
